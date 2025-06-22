@@ -28,5 +28,5 @@ A simple .NET 8 Console application that allows you to manage student records us
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/StudentManagement.git
+   git clone https://github.com/Spacenaut47/StudentManagement.git
    cd StudentManagement
