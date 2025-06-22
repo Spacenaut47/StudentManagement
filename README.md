@@ -30,3 +30,21 @@ A simple .NET 8 Console application that allows you to manage student records us
    ```bash
    git clone https://github.com/Spacenaut47/StudentManagement.git
    cd StudentManagement
+   
+**Open the solution in Visual Studio**
+(Double-click .sln file or open the folder if using VS Code)
+
+**Restore NuGet Packages**
+```bash
+   dotnet restore
+   dotnet build
+   Add-Migration InitialSetup
+   Update-Database
+   dotnet run
+
+**📦 Dependencies**
+- Microsoft.EntityFrameworkCore
+- Microsoft.EntityFrameworkCore.Sqlite
+- Microsoft.EntityFrameworkCore.Tools
+(Installed via NuGet Package Manager)
+
