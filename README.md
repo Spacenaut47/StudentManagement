@@ -3,30 +3,19 @@ A simple .NET 8 Console application that allows you to manage student records us
 
 ✅ Features
 Add new students
-
 View all student records
-
 Update existing student details
-
 Delete students by ID
-
 Search students by name (case-insensitive)
-
 SQLite database integration via EF Core (code-first)
 
 🛠️ Tech Stack
 .NET 8
-
 Entity Framework Core
-
 SQLite
-
 C# (Console App)
 
 📂 Folder Structure
-lua
-Copy
-Edit
 StudentManagement/
 ├── Models/
 │   └── Student.cs
@@ -36,61 +25,34 @@ StudentManagement/
 │   └── StudentService.cs
 ├── Program.cs
 └── students.db   <-- created at runtime
-🚀 How to Run
-Clone the repository
 
-bash
-Copy
-Edit
-git clone https://github.com/your-username/StudentManagement.git
-cd StudentManagement
-Open the solution in Visual Studio
+🚀 How to Run
+1. Clone the repository
+   git clone https://github.com/your-username/StudentManagement.git
+   cd StudentManagement
+   
+3. Open the solution in Visual Studio
 (Double-click .sln file or open the folder if you're using VS Code)
 
-Restore NuGet Packages
+4. Restore NuGet Packages
+  dotnet restore
 
-nginx
-Copy
-Edit
-dotnet restore
-Build the project
+5. Build the project
+   dotnet build
+   
+7. Run the application
+   dotnet run
 
-nginx
-Copy
-Edit
-dotnet build
-Run the application
+8.Database Setup
+  The SQLite database (students.db) will be auto-created on first run using EnsureCreated().
 
-arduino
-Copy
-Edit
-dotnet run
-Database Setup
-The SQLite database (students.db) will be auto-created on first run using EnsureCreated().
-
-🧪 Sample Console Menu
-pgsql
-Copy
-Edit
---- Student Management Menu ---
-1. Add Student
-2. View All Students
-3. Delete Student
-4. Update Student
-5. Search Student by Name
-6. Exit
 📦 Dependencies
 Microsoft.EntityFrameworkCore
-
 Microsoft.EntityFrameworkCore.Sqlite
-
 Microsoft.EntityFrameworkCore.Tools
-
 (These are installed via NuGet)
 
 📌 Notes
 Data is stored in a local file students.db (SQLite format)
-
 No external database setup is required
-
 You can inspect the database using DB Browser for SQLite
