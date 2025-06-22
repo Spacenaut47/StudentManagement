@@ -15,17 +15,6 @@ Entity Framework Core
 SQLite
 C# (Console App)
 
-📂 Folder Structure
-StudentManagement/
-├── Models/
-│   └── Student.cs
-├── Data/
-│   └── AppDbContext.cs
-├── Services/
-│   └── StudentService.cs
-├── Program.cs
-└── students.db   <-- created at runtime
-
 🚀 How to Run
 1. Clone the repository
    git clone https://github.com/your-username/StudentManagement.git
