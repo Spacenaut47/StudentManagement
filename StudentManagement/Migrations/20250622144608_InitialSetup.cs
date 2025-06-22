@@ -7,7 +7,7 @@
 namespace StudentManagement.Migrations
 {
     /// <inheritdoc />
-    public partial class AddCourseRelation : Migration
+    public partial class InitialSetup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

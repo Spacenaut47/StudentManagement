@@ -1,5 +1,6 @@
 ﻿using StudentManagement.Data;
 using StudentManagement.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace StudentManagement.Services;
 
@@ -13,16 +14,28 @@ public class StudentService
         _context.Database.EnsureCreated();
     }
 
-    public void AddStudent(string name, string course, int age)
+    public void AddStudent(string name, int courseId, int age)
     {
-        var student = new Student { Name = name, Course = course, Age = age };
+        var student = new Student
+        {
+            Name = name,
+            Age = age,
+            CourseId = courseId
+        };
+
         _context.Students.Add(student);
         _context.SaveChanges();
     }
 
+
     public List<Student> GetAllStudents()
     {
-        return _context.Students.ToList();
+        return _context.Students.Include(s => s.Course).ToList();
+    }
+
+    public List<Course> GetAllCourses()
+    {
+        return _context.Courses.ToList();
     }
 
     public void DeleteStudent(int id)
@@ -35,17 +48,18 @@ public class StudentService
         }
     }
 
-    public void UpdateStudent(int id, string name, string course, int age)
+    public void UpdateStudent(int id, string name, int courseId, int age)
     {
         var student = _context.Students.Find(id);
         if (student != null)
         {
             student.Name = name;
-            student.Course = course;
             student.Age = age;
+            student.CourseId = courseId;
             _context.SaveChanges();
         }
     }
+
 
     public List<Student> SearchStudentsByName(string name)
     {

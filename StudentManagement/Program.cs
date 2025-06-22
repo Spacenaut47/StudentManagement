@@ -19,17 +19,34 @@ while (true)
     {
         case "1":
             Console.Write("Enter Name: ");
-            string? name = Console.ReadLine();
-            Console.Write("Enter Course: ");
-            string? course = Console.ReadLine();
+            string? nameInput = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(nameInput))
+            {
+                Console.WriteLine("Invalid name.");
+                break;
+            }
+
+            Console.WriteLine("Available Courses:");
+            var courses = service.GetAllCourses();
+            foreach (var c in courses)
+                Console.WriteLine($"{c.Id} - {c.Name}");
+
+            Console.Write("Enter Course ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int courseId))
+            {
+                Console.WriteLine("Invalid course ID.");
+                break;
+            }
+
             Console.Write("Enter Age: ");
             if (!int.TryParse(Console.ReadLine(), out int age))
             {
-                Console.WriteLine("Invalid age.");
+                Console.WriteLine("Invalid age. Try again.");
                 break;
             }
-            service.AddStudent(name!, course!, age);
-            Console.WriteLine("Student added.");
+
+            service.AddStudent(nameInput, courseId, age);
+            Console.WriteLine("Student added successfully.");
             break;
 
         case "2":
@@ -40,43 +57,87 @@ while (true)
             }
             else
             {
+                Console.WriteLine("\n--- Student List ---");
                 foreach (var s in students)
-                    Console.WriteLine($"{s.Id} - {s.Name} ({s.Course}), Age: {s.Age}");
+                {
+                    Console.WriteLine($"{s.Id} - {s.Name} ({s.Course?.Name}), Age: {s.Age}");
+                }
             }
             break;
 
         case "3":
             Console.Write("Enter Student ID to delete: ");
-            if (int.TryParse(Console.ReadLine(), out int id))
+            if (!int.TryParse(Console.ReadLine(), out int id))
             {
-                service.DeleteStudent(id);
-                Console.WriteLine("Deleted (if exists).");
+                Console.WriteLine("Invalid ID. Try again.");
+                break;
             }
+
+            service.DeleteStudent(id);
+            Console.WriteLine("Student deleted (if ID existed).");
             break;
 
         case "4":
             Console.Write("Enter Student ID to update: ");
-            if (!int.TryParse(Console.ReadLine(), out int updateId)) break;
+            if (!int.TryParse(Console.ReadLine(), out int updateId))
+            {
+                Console.WriteLine("Invalid ID. Try again.");
+                break;
+            }
 
             Console.Write("Enter New Name: ");
             string? newName = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(newName))
+            {
+                Console.WriteLine("Invalid name.");
+                break;
+            }
 
-            Console.Write("Enter New Course: ");
-            string? newCourse = Console.ReadLine();
+            Console.WriteLine("Available Courses:");
+            var allCourses = service.GetAllCourses();
+            foreach (var c in allCourses)
+                Console.WriteLine($"{c.Id} - {c.Name}");
+
+            Console.Write("Enter New Course ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int newCourseId))
+            {
+                Console.WriteLine("Invalid course ID.");
+                break;
+            }
 
             Console.Write("Enter New Age: ");
-            if (!int.TryParse(Console.ReadLine(), out int newAge)) break;
+            if (!int.TryParse(Console.ReadLine(), out int newAge))
+            {
+                Console.WriteLine("Invalid age. Try again.");
+                break;
+            }
 
-            service.UpdateStudent(updateId, newName!, newCourse!, newAge);
-            Console.WriteLine("Updated (if exists).");
+            service.UpdateStudent(updateId, newName, newCourseId, newAge);
+            Console.WriteLine("Student updated (if ID existed).");
             break;
 
         case "5":
             Console.Write("Enter name to search: ");
-            string? searchName = Console.ReadLine();
-            var results = service.SearchStudentsByName(searchName!);
-            foreach (var s in results)
-                Console.WriteLine($"{s.Id} - {s.Name} ({s.Course}), Age: {s.Age}");
+            string? searchNameInput = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(searchNameInput))
+            {
+                Console.WriteLine("Invalid search term.");
+                break;
+            }
+
+            var results = service.SearchStudentsByName(searchNameInput);
+            if (results.Count == 0)
+            {
+                Console.WriteLine("No students found with that name.");
+            }
+            else
+            {
+                Console.WriteLine("\n--- Search Results ---");
+                foreach (var student in results)
+                {
+                    Console.WriteLine($"{student.Id} - {student.Name} ({student.Course?.Name}), Age: {student.Age}");
+                }
+            }
             break;
 
         case "6":
@@ -84,7 +145,7 @@ while (true)
             return;
 
         default:
-            Console.WriteLine("Invalid option.");
+            Console.WriteLine("Invalid option. Please try again.");
             break;
     }
 }
