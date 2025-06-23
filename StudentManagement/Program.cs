@@ -4,6 +4,7 @@ var service = new StudentService();
 
 while (true)
 {
+    Console.ForegroundColor = ConsoleColor.Blue;
     Console.WriteLine("\n--- Student Management Menu ---");
     Console.WriteLine("1. Add Student");
     Console.WriteLine("2. View All Students");
@@ -14,7 +15,11 @@ while (true)
     Console.WriteLine("7. Exit");
     Console.Write("Choose an option: ");
 
+    Console.ResetColor();
+
     var input = Console.ReadLine();
+    
+    Console.ForegroundColor = ConsoleColor.Yellow;
 
     switch (input)
     {
@@ -140,10 +145,12 @@ while (true)
                 }
             }
             break;
-        
+
         case "6":
             while (true)
             {
+                Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.WriteLine("\n--- Course Management ---");
                 Console.WriteLine("1. Add Course");
                 Console.WriteLine("2. View All Courses");
@@ -164,9 +171,13 @@ while (true)
                         break;
 
                     case "2":
+                        Console.ResetColor();
+                        Console.ForegroundColor = ConsoleColor.Cyan;
                         var courses1 = service.GetAllCourses();
+                        Console.WriteLine("\n--- The List of Courses ---\n");
                         foreach (var c in courses1)
                             Console.WriteLine($"{c.Id} - {c.Name}");
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
                         break;
 
                     case "3":
@@ -199,10 +210,15 @@ while (true)
 
 
         case "7":
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Exiting...");
+            Console.ResetColor();
             return;
 
         default:
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("Invalid option. Please try again.");
             break;
     }
