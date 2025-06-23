@@ -70,4 +70,32 @@ public class StudentService
                        .ToList();
     }
 
+    public void AddCourse(string name)
+    {
+        var course = new Course { Name = name };
+        _context.Courses.Add(course);
+        _context.SaveChanges();
+    }
+
+    public void UpdateCourse(int id, string newName)
+    {
+        var course = _context.Courses.Find(id);
+        if (course != null)
+        {
+            course.Name = newName;
+            _context.SaveChanges();
+        }
+    }
+
+    public void DeleteCourse(int id)
+    {
+        var course = _context.Courses.Find(id);
+        if (course != null)
+        {
+            _context.Courses.Remove(course);
+            _context.SaveChanges();
+        }
+    }
+
+
 }

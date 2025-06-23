@@ -10,7 +10,8 @@ while (true)
     Console.WriteLine("3. Delete Student");
     Console.WriteLine("4. Update Student");
     Console.WriteLine("5. Search Student by Name");
-    Console.WriteLine("6. Exit");
+    Console.WriteLine("6. Manage Courses");
+    Console.WriteLine("7. Exit");
     Console.Write("Choose an option: ");
 
     var input = Console.ReadLine();
@@ -139,8 +140,65 @@ while (true)
                 }
             }
             break;
-
+        
         case "6":
+            while (true)
+            {
+                Console.WriteLine("\n--- Course Management ---");
+                Console.WriteLine("1. Add Course");
+                Console.WriteLine("2. View All Courses");
+                Console.WriteLine("3. Update Course");
+                Console.WriteLine("4. Delete Course");
+                Console.WriteLine("5. Back to Main Menu");
+                Console.Write("Choose an option: ");
+                var courseInput = Console.ReadLine();
+
+                switch (courseInput)
+                {
+                    case "1":
+                        Console.Write("Enter course name: ");
+                        string? cname = Console.ReadLine();
+                        if (string.IsNullOrWhiteSpace(cname)) break;
+                        service.AddCourse(cname);
+                        Console.WriteLine("Course added.");
+                        break;
+
+                    case "2":
+                        var courses1 = service.GetAllCourses();
+                        foreach (var c in courses1)
+                            Console.WriteLine($"{c.Id} - {c.Name}");
+                        break;
+
+                    case "3":
+                        Console.Write("Enter Course ID to update: ");
+                        if (!int.TryParse(Console.ReadLine(), out int cid)) break;
+                        Console.Write("Enter new course name: ");
+                        string? newCname = Console.ReadLine();
+                        if (string.IsNullOrWhiteSpace(newCname)) break;
+                        service.UpdateCourse(cid, newCname);
+                        Console.WriteLine("Course updated.");
+                        break;
+
+                    case "4":
+                        Console.Write("Enter Course ID to delete: ");
+                        if (!int.TryParse(Console.ReadLine(), out int delCid)) break;
+                        service.DeleteCourse(delCid);
+                        Console.WriteLine("Course deleted.");
+                        break;
+
+                    case "5":
+                        goto EndCourseMenu;
+
+                    default:
+                        Console.WriteLine("Invalid option.");
+                        break;
+                }
+            }
+        EndCourseMenu:
+            break;
+
+
+        case "7":
             Console.WriteLine("Exiting...");
             return;
 
