@@ -208,7 +208,6 @@ while (true)
         EndCourseMenu:
             break;
 
-
         case "7":
             Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.Yellow;

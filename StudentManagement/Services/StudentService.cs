@@ -16,6 +16,19 @@ public class StudentService
 
     public void AddStudent(string name, int courseId, int age)
     {
+        if (string.IsNullOrWhiteSpace(name) || age < 1 || age > 120)
+        {
+            Console.WriteLine("Invalid name or age.");
+            return;
+        }
+
+        var courseExists = _context.Courses.Any(c => c.Id == courseId);
+        if (!courseExists)
+        {
+            Console.WriteLine("Course ID does not exist.");
+            return;
+        }
+
         var student = new Student
         {
             Name = name,
@@ -72,6 +85,11 @@ public class StudentService
 
     public void AddCourse(string name)
     {
+        if (_context.Courses.Any(c => c.Name!.ToLower() == name.ToLower()))
+        {
+            Console.WriteLine("Course with this name already exists.");
+            return;
+        }
         var course = new Course { Name = name };
         _context.Courses.Add(course);
         _context.SaveChanges();
@@ -89,13 +107,23 @@ public class StudentService
 
     public void DeleteCourse(int id)
     {
-        var course = _context.Courses.Find(id);
-        if (course != null)
+        var course = _context.Courses
+                            .Include(c => c.Students)
+                            .FirstOrDefault(c => c.Id == id);
+
+        if (course == null)
         {
-            _context.Courses.Remove(course);
-            _context.SaveChanges();
+            Console.WriteLine("Course not found.");
+            return;
         }
+
+        if (course.Students != null && course.Students.Count > 0)
+        {
+            Console.WriteLine("Cannot delete: Course has students assigned.");
+            return;
+        }
+
+        _context.Courses.Remove(course);
+        _context.SaveChanges();
     }
-
-
 }
