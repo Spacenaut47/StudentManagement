@@ -6,6 +6,6 @@ public class Student
     public string? Name { get; set; }
     public int Age { get; set; }
 
-    public int CourseId { get; set; }         // Foreign key
-    public Course? Course { get; set; }       // Navigation property
+    public int CourseId { get; set; }         
+    public Course? Course { get; set; }       
 }

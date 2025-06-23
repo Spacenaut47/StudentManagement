@@ -64,7 +64,7 @@ public class StudentService
     public List<Student> SearchStudentsByName(string name)
     {
         return _context.Students
-                       .AsEnumerable()  // 🟢 Fetch records first (in memory)
+                       .AsEnumerable()
                        .Where(s => !string.IsNullOrEmpty(s.Name) &&
                                    s.Name.Contains(name, StringComparison.OrdinalIgnoreCase))
                        .ToList();
